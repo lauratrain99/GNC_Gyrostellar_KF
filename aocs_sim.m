@@ -1,5 +1,7 @@
 clear;clc;
 
+buses = Simulink.data.dictionary.open('databus.sldd');
+
 % orbital parameter
 mu = 3.986e+5;
 
@@ -16,9 +18,9 @@ r0 = [rmag; 0; 0];
 v0 = [0; sqrt(mu/rmag); 0];
 
 % geometric dimensions of the S/C
-m = 50;
-w = 5;
-h = 6;
+m = 100;
+w = 2;
+h = 5;
 d = 3;
 
 % inertia tensor of the S/C
