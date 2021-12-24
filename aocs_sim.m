@@ -40,3 +40,7 @@ Irw = [5.02e-5, 0, 0; 0, 9.41e-5, 0; 0, 0, 5.02e-5];
 % magnetic field intensity [nT]
 B0 = 30036.7;
 
+%Magnetometer
+hyst = (60e-6)*0.001;
+noiseDens = (30e-12)/6;
+
