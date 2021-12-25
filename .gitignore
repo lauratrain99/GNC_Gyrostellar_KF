@@ -131,3 +131,7 @@ slprj/sim/varcache/main/tmwinternal/simulink_cache.xml
 slprj/sim/varcache/main/checksumOfCache.mat
 slprj/sim/varcache/main/varInfo.mat
 *.autosave
+*.xml
+*.xml
+*.xml
+*.slxc
