@@ -32,9 +32,9 @@ v0 = [0; sqrt(mu/rmag); 0];
 
 %% Test no gravity torque
 % Iz>Iy>Ix stable configuration. w>h>d
-m = 100;
-R = 1;
-L = 5*2;
+m = 10;
+R = 0.1;
+L = 0.304*2;
 
 % inertia tensor of the S/C
 Isc = [1/4 * m * R^2 + 1/12 * m * L^2, 0, 0; 0, 1/4 * m * R^2 + 1/12 * m * L^2 , 0; 0, 0, 1/2 * m * R^2];

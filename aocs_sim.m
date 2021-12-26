@@ -18,10 +18,10 @@ r0 = [rmag; 0; 0];
 v0 = [0; sqrt(mu/rmag); 0];
 
 % geometric dimensions of the S/C
-m = 100;
-w = 5;
-h = 3;
-d = 2;
+m = 10;
+w = 0.2;
+h = 0.304;
+d = 0.1;
 
 % inertia tensor of the S/C
 Isc = [m/12 * (h^2 + d^2), 0, 0; 0, m/12 * (w^2 + d^2), 0; 0, 0, m/12 * (h^2 + w^2)];
@@ -40,8 +40,6 @@ Irw = [5.02e-5, 0, 0; 0, 9.41e-5, 0; 0, 0, 5.02e-5];
 % magnetic field intensity [nT]
 B0 = 30036.7;
 
-% Gravity torque flag
-flag_gravtorque = 0;
 
 % Magnetometer
 hyst = (60e-6)*0.001;
