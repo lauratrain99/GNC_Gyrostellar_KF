@@ -43,9 +43,9 @@ B0 = 30036.7;
 
 % Magnetometer
 hyst = (60e-6)*0.001;
-noiseDens = (30e-12)/6;
+noiseDens = ((50e-12)^2)*1000;
 
 %IMU
-noiseDensAcc = (0.07)/6;
-noiseDensAtt = (0.15)/6;
+noiseDensAcc = ((0.07)^2)*10;
+noiseDensAtt = ((0.15)^2)*10;
 
