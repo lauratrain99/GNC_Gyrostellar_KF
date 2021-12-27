@@ -45,3 +45,7 @@ B0 = 30036.7;
 hyst = (60e-6)*0.001;
 noiseDens = (30e-12)/6;
 
+%IMU
+noiseDensAcc = (0.07)/6;
+noiseDensAtt = (0.15)/6;
+
