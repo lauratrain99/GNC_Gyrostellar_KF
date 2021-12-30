@@ -9,7 +9,6 @@ set(groot, 'defaultLegendLocation',             'northeast');
 
 %% link to data bus
 
-addpath ../Control
 addpath ../Dynamics
 addpath ../
 
