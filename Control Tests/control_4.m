@@ -83,13 +83,16 @@ D = zeros(3);
 
 % 2. LQR
 %
-Q   = 1 * eye(3); 
+Q   = 1e-3 * eye(3); 
 R   = 1e-4 * eye(3); 
 N   = zeros(3); 
 %
-[KK_LQR,S,CLP] = lqr(A,B,Q,R,N); 
-%
-damp(A - B*KK_LQR)
+[K_LQR,S,CLP] = lqr(A,B,Q,R,N); 
 
+% K_LQR = [1.58,0,0;0,1.58,0;0,0,1.58];
+
+damp(A - B*K_LQR)
 % y = [roll, pitch, yaw];
 
+Co = ctrb(A,B);
+rank(Co)
