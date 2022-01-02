@@ -50,7 +50,7 @@ wx0 = 0;
 wy0 = 0;
 wz0 = 0;
 w0 = [wx0; wy0; wz0];
-q0 = angle2quat(0,0,0,'ZYX');
+q0 = angle2quat(0,0,0,'ZXZ');
 
 %% Control requirements
 Fmax = 25e-3;
@@ -59,8 +59,7 @@ Larm = 5e-2;
 % tmin = 2e-3;
 t_thrust = 1;
 
-tz0 = 10;
-yaw = 45;
+wz_desired = 20*pi/Torb;
 
 
 
@@ -84,7 +83,7 @@ B(3,3) = 1/Iz;
 
 num = [0, 0, 1];
 
-den = [Iz, 0, 0]; 
+den = [Iz, 0]; 
 
 sys = tf(num, den);
 
@@ -94,12 +93,9 @@ Kp = PID_params.Kp;
 Ki = PID_params.Ki;
 Kd = PID_params.Kd;
 
-% check if matrix is controllable
-P = ctrb(A,B);
-rank(P)
 
 num_cl = [Kd, Kp, Ki];
-den_cl = [Iz, Kd, Kp, Ki];
+den_cl = [Iz + Kd, Kp, Ki];
 
 sys_cl = tf(num_cl,den_cl);
 

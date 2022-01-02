@@ -50,7 +50,7 @@ wx0 = 0;
 wy0 = 0;
 wz0 = 0;
 w0 = [wx0; wy0; wz0];
-q0 = angle2quat(0,0,0,'ZYX');
+q0 = angle2quat(0,0,0,'ZXZ');
 
 %% Control requirements
 Fmax = 25e-3;
@@ -59,9 +59,7 @@ Larm = 5e-2;
 % tmin = 2e-3;
 t_thrust = 1;
 
-tz0 = 10;
-yaw = 45;
-
+wz_desired = 20*pi/Torb;
 
 
 % state x = [roll, pitch, yaw, wx, wy, wz];
@@ -80,37 +78,18 @@ B(1,1) = 1/Ix;
 B(2,2) = 1/Iy;
 B(3,3) = 1/Iz;
 
+C = eye(3);
+D = zeros(3);
+
+% 2. LQR
+%
+Q   = 1 * eye(3); 
+R   = 1e-4 * eye(3); 
+N   = zeros(3); 
+%
+[KK_LQR,S,CLP] = lqr(A,B,Q,R,N); 
+%
+damp(A - B*KK_LQR)
+
 % y = [roll, pitch, yaw];
 
-num = [0, 0, 1];
-
-den = [Iz, 0, 0]; 
-
-sys = tf(num, den);
-
-PID_params = pidtune(sys,'PID');
-
-Kp = PID_params.Kp;
-Ki = PID_params.Ki;
-Kd = PID_params.Kd;
-
-% check if matrix is controllable
-P = ctrb(A,B);
-rank(P)
-
-num_cl = [Kd, Kp, Ki];
-den_cl = [Iz, Kd, Kp, Ki];
-
-sys_cl = tf(num_cl,den_cl);
-
-rlocus(sys_cl)
-[wn,zeta,p] = damp(sys_cl);
-
-% 
-% ask Sanjurjo if he wants us to compute these values, does it make sense
-% for systems with poles > 1?
-% td = ;
-% tr = ;
-% tp = ;
-% Mp = ;
-% ts = ;
