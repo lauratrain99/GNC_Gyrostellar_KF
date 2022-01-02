@@ -50,7 +50,7 @@ wx0 = 0;
 wy0 = 0;
 wz0 = 0;
 w0 = [wx0; wy0; wz0];
-q0 = angle2quat(0,0,0,'ZXZ');
+q0 = angle2quat(0,0,0,'ZYX');
 
 %% Control requirements
 Fmax = 25e-3;
@@ -59,9 +59,25 @@ Larm = 5e-2;
 % tmin = 2e-3;
 t_thrust = 1;
 
-wz_desired = 20*pi/Torb;
+yaw = 45;
+pitch = 30;
+roll = 15;
 
 Tmax = Fmax*Larm;
+
+wz = Tmax*t_thrust/Iz;
+tz = deg2rad(yaw)/wz;
+wy = Tmax*t_thrust/Iy;
+ty = deg2rad(pitch)/wy;
+wx = Tmax*t_thrust/Ix;
+tx = deg2rad(roll)/wx;
+
+t0z = 10;
+tfz = t0z + tz;
+t0y = tfz + 10;
+tfy = t0y + ty;
+t0x = tfy + 10;
+tfx = t0x + tx;
 
 % state x = [roll, pitch, yaw, wx, wy, wz];
 
@@ -79,21 +95,50 @@ B(1,1) = 1/Ix;
 B(2,2) = 1/Iy;
 B(3,3) = 1/Iz;
 
-C = eye(3);
-D = zeros(3);
+% check if matrix is controllable
+P = ctrb(A,B);
+rank(P)
 
-% 2. LQR
-%
-Q   = 1e-3 * eye(3); 
-R   = 1e-4 * eye(3); 
-N   = zeros(3); 
-%
-[K_LQR,S,CLP] = lqr(A,B,Q,R,N); 
+% yaw control
 
-% K_LQR = [1.58,0,0;0,1.58,0;0,0,1.58];
+numZ = [0, 0, 1];
+denZ = [Iz, 0, 0]; 
+sysZ = tf(numZ, denZ);
+PID_paramsZ = pidtune(sysZ,'PID');
+KpZ = PID_paramsZ.Kp;
+KiZ = PID_paramsZ.Ki;
+KdZ = PID_paramsZ.Kd;
 
-damp(A - B*K_LQR)
-% y = [roll, pitch, yaw];
+% pitch control
 
-Co = ctrb(A,B);
-rank(Co)
+numY = [0, 0, 1];
+denY = [Iy, 0, 0]; 
+sysY = tf(numY, denY);
+PID_paramsY = pidtune(sysY,'PID');
+KpY = PID_paramsY.Kp;
+KiY = PID_paramsY.Ki;
+KdY = PID_paramsY.Kd;
+
+% roll control
+
+numX = [0, 0, 1];
+denX = [Ix, 0, 0]; 
+sysX = tf(numX, denX);
+PID_paramsX = pidtune(sysX,'PID');
+KpX = PID_paramsX.Kp;
+KiX = PID_paramsX.Ki;
+KdX = PID_paramsX.Kd;
+
+Kp = [KpX,0,0;0,KpY,0;0,0,KpZ];
+Ki = [KiX,0,0;0,KiY,0;0,0,KiZ];
+Kd = [KdX,0,0;0,KdY,0;0,0,KdZ];
+
+% num_cl = [Kd, Kp, Ki];
+% den_cl = [Iz, Kd, Kp, Ki];
+% 
+% sys_cl = tf(num_cl,den_cl);
+% 
+% rlocus(sys_cl)
+% [wn,zeta,p] = damp(sys_cl);
+
+

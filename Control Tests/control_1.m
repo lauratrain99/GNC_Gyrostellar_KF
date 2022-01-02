@@ -57,7 +57,6 @@ Larm = 5e-2;
 % tmin = 2e-3;
 t_thrust = 1;
 
-
 yaw = 45;
 pitch = 30;
 roll = 15;

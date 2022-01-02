@@ -61,7 +61,7 @@ t_thrust = 1;
 
 wz_desired = 20*pi/Torb;
 
-
+Tmax = Fmax*Larm;
 
 % state x = [roll, pitch, yaw, wx, wy, wz];
 

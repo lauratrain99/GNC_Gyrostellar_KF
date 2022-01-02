@@ -59,8 +59,15 @@ Larm = 5e-2;
 % tmin = 2e-3;
 t_thrust = 1;
 
-tz0 = 10;
+Tmax = Fmax*Larm;
+
 yaw = 45;
+
+wz = Tmax*t_thrust/Iz;
+tz = deg2rad(yaw)/wz;
+
+t0z = 10;
+tfz = t0z + tz;
 
 
 
