@@ -138,3 +138,4 @@ slprj/sim/varcache/main/varInfo.mat
 *.asv
 Sensors/slprj/sim/varcache/MagTest/checksumOfCache.mat
 Sensors/slprj/sim/varcache/MagTest/varInfo.mat
+*.mat
