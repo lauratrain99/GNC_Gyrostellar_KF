@@ -1,16 +1,13 @@
-% This script has to be run to set up the parameters for the problem 1
-% in the Control part. The simulink corresponding files are testOpenLoop.slx,
-% testOpenLoopNoisy.slx
-% The second section plots the results obtained in simulink
+% This script has to be run to set up the parameters for the problem 3
+% in the Navigation part. The simulink corresponding file is testNavigationSol.slx,
 % Authors: Laura Train & Juan María Herrera
 
 clear;clc;close all;
 
 % Add paths
 
-addpath ../Dynamics
-addpath ../Control
-addpath ../
+addpath ../../Dynamics
+addpath ../../Navigation
 
 % Initial conditions
 % orbital parameter
@@ -47,32 +44,15 @@ Ix = Isc(1,1);
 Iy = Isc(2,2);
 Iz = Isc(3,3);
 
-% Control requirements
-% Thruster specifications
-Fmax = 25e-3;
-Isp = 60;
-Larm = 5e-2;
-% tmin = 2e-3;
-t_thrust = 1;
-Tmax = Fmax*Larm;
+% Magnetometer
+hyst = (60e-6)*0.001;
+noiseDens = ((50e-12)^2)*40;
 
-% Desired angles
-yaw = 45;
-pitch = 30;
-roll = 15;
+% IMU
+noiseDensAcc = 0.33*40*((((0.07/60)/0.01)*10^(-3))^2);
+noiseDensAng =  0.33*40*((0.15/60)^2);
+biasAcc = 0.33*((0.00004)^2)/(2*pi);
+biasAng = 0.33*((0.3/3600)^2)/(2*pi);
 
-% desired angular velocities and times between burns
-wz = Tmax*t_thrust/Iz;
-tz = deg2rad(yaw)/wz;
-wy = Tmax*t_thrust/Iy;
-ty = deg2rad(pitch)/wy;
-wx = Tmax*t_thrust/Ix;
-tx = deg2rad(roll)/wx;
-
-% initial and final times for each thruster
-t0z = 10;
-tfz = t0z + tz;
-t0y = tfz + 10;
-tfy = t0y + ty;
-t0x = tfy + 10;
-tfx = t0x + tx;
+% StarTracker
+noiseNEA = 0.33*10*((0.55*pi/(3600*180))^2);

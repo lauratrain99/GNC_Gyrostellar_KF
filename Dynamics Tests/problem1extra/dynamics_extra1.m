@@ -1,5 +1,5 @@
-% This script has to be run to set up the parameters for the problem 2 in
-% the Dynamics part. The simulink corresponding file is testReactionWheel.slx.
+% This script has to be run to set up the parameters for the extra problem 1 in
+% the Dynamics part. The simulink corresponding file is testMagnetoField.slx.
 % The second section plots the results obtained in simulink
 % Authors: Laura Train & Juan María Herrera
 
@@ -7,8 +7,8 @@ clear;clc;close all
 
 % Add paths
 
-addpath ../Dynamics
-addpath ../
+addpath ../../Dynamics
+addpath ../../
 
 % Initial conditions
 % orbital parameter
@@ -22,9 +22,16 @@ rmag = RE + h;
 % orbital period
 Torb = 2*pi*sqrt(rmag^3/mu);
 
-% position and velocity -> assume Equatorial circular orbit
-r0 = [rmag; 0; 0];
-v0 = [0; sqrt(mu/rmag); 0];
+% orbital plane
+a = RE + h;
+e = 0.2;
+Omega = 0;
+inc = 30*pi/180;
+omega = 0;
+theta = 0;
+
+% position and velocity initial conditions
+[r0, v0] = coe2rv(mu, a, e, Omega, inc, omega, theta);
 
 % value to counteract by the reaction wheels
 wz0 = deg2rad(2);
@@ -45,14 +52,8 @@ Ix = Isc(1,1);
 Iy = Isc(2,2);
 Iz = Isc(3,3);
 
-% reaction wheels inertial tensor
-Irw = [5.02e-5, 0, 0; 0, 9.41e-5, 0; 0, 0, 5.02e-5];
-
-% value of the angular velocity impulse
-wzrw = (Isc(3,3) + Irw(3,3))/Irw(3,3)* wz0;
-twait = 10*pi/wz0;
-t0 = 1000;
-tramp = 10;
+% magnetic field intensity [microT]
+B0 = 30.0367;
 
 %% PLOT SETTING
 % Default properties of plots
@@ -81,3 +82,4 @@ set(groot, 'defaultLegendLocation',             'northeast');
 % xlabel("Time [s]")
 % ylabel("Quaternions")
 % grid minor
+

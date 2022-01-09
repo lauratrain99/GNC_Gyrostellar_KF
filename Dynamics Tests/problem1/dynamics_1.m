@@ -8,8 +8,8 @@ clear;clc;close all;
 
 % Add paths
 
-addpath ../Dynamics
-addpath ../
+addpath ../../Dynamics
+addpath ../../
 
 % Initial conditions
 % orbital parameter

@@ -7,9 +7,9 @@ clear;clc;close all;
 
 % Add paths
 
-addpath ../Dynamics
-addpath ../Control
-addpath ../
+addpath ../../Dynamics
+addpath ../../Control
+addpath ../../
 
 % Initial conditions
 % orbital parameter
