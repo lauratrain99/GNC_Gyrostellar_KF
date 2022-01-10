@@ -53,8 +53,13 @@ biasAng = 0.33*((0.3/3600)^2)/(2*pi);
 % StarTracker
 noiseNEA = 0.33*10*((0.55*pi/(3600*180))^2);
 
-% gyro_std
-% gyro_bias_init
-% init_align_error
-% gyro_bias_init
-% str_std
+gyro_std = [sqrt(deg2rad(noiseDensAng));sqrt(deg2rad(noiseDensAng));sqrt(deg2rad(noiseDensAng)) ];
+gyro_bias_init = [sqrt(deg2rad(biasAng));sqrt(deg2rad(biasAng));sqrt(deg2rad(biasAng)) ];
+init_align_error = deg2rad([1;2;2]);
+str_std =[sqrt(deg2rad(noiseNEA));sqrt(deg2rad(noiseNEA));sqrt(deg2rad(noiseNEA)) ];
+
+% gyro_std = [1;1;1];
+% gyro_bias_init = [1;1;1];
+% init_align_error = deg2rad([1;1;2]);
+% str_std =[1;1;1];
+
