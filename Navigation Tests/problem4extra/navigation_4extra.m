@@ -52,3 +52,9 @@ biasAng = 0.33*((0.3/3600)^2)/(2*pi);
 
 % StarTracker
 noiseNEA = 0.33*10*((0.55*pi/(3600*180))^2);
+
+% gyro_std
+% gyro_bias_init
+% init_align_error
+% gyro_bias_init
+% str_std
