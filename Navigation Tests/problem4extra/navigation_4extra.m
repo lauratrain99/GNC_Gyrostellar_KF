@@ -56,7 +56,7 @@ noiseNEA = 0.33*10*((0.55*pi/(3600*180))^2); %W
 gyro_std = [sqrt(deg2rad(noiseAng));sqrt(deg2rad(noiseAng));sqrt(deg2rad(noiseAng)) ];
 gyro_bias_init = [sqrt(deg2rad(biasAng));sqrt(deg2rad(biasAng));sqrt(deg2rad(biasAng)) ];
 init_align_error = deg2rad([0;0;0]);
-str_std =[sqrt(deg2rad(noiseNEA));sqrt(deg2rad(noiseNEA));sqrt(deg2rad(noiseNEA)) ];
+str_std =[sqrt(noiseNEA);sqrt(noiseNEA);sqrt(noiseNEA) ];
 
 % gyro_std = [100;100;100];
 % gyro_bias_init = [1;1;1];
