@@ -44,21 +44,21 @@ Ix = Isc(1,1);
 Iy = Isc(2,2);
 Iz = Isc(3,3);
 
-% IMU
-noiseDensAcc = 0.33*40*((((0.07/60)/0.01)*10^(-3))^2);
-noiseDensAng =  0.33*40*((0.15/60)^2);
-biasAcc = 0.33*((0.00004)^2)/(2*pi);
-biasAng = 0.33*((0.3/3600)^2)/(2*pi);
+%IMU
+noiseAcc = 0.33*40*((((0.07/60)/0.01)*10^(-3))^2); %W
+noiseAng =  0.33*40*((0.15/60)^2); %W
+biasAcc = 0.33*((0.00004)^2)/(2*pi); %g^2
+biasAng = 0.33*((0.3/3600)^2)/(2*pi);%(º/s)^2
 
-% StarTracker
-noiseNEA = 0.33*10*((0.55*pi/(3600*180))^2);
+%StarTracker
+noiseNEA = 0.33*10*((0.55*pi/(3600*180))^2); %W
 
-gyro_std = [sqrt(deg2rad(noiseDensAng));sqrt(deg2rad(noiseDensAng));sqrt(deg2rad(noiseDensAng)) ];
+gyro_std = [sqrt(deg2rad(noiseAng));sqrt(deg2rad(noiseAng));sqrt(deg2rad(noiseAng)) ];
 gyro_bias_init = [sqrt(deg2rad(biasAng));sqrt(deg2rad(biasAng));sqrt(deg2rad(biasAng)) ];
-init_align_error = deg2rad([1;2;2]);
+init_align_error = deg2rad([0;0;0]);
 str_std =[sqrt(deg2rad(noiseNEA));sqrt(deg2rad(noiseNEA));sqrt(deg2rad(noiseNEA)) ];
 
-% gyro_std = [1;1;1];
+% gyro_std = [100;100;100];
 % gyro_bias_init = [1;1;1];
 % init_align_error = deg2rad([1;1;2]);
 % str_std =[1;1;1];
