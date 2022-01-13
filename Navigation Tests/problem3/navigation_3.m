@@ -26,7 +26,7 @@ r0 = [rmag; 0; 0];
 v0 = [0; sqrt(mu/rmag); 0];
 
 % assume a perturbation a 1% perturbation wrt Z axis angular velocity
-wn = 10*pi/Torb;
+wn = 20*pi/Torb;
 w0 = [wn*0.01; wn*0.01; wn];
 q0 = angle2quat(0,0,0,'ZYX');
 
@@ -56,3 +56,23 @@ biasAng = 0.33*((0.3/3600)^2)/(2*pi);
 
 % StarTracker
 noiseNEA = 0.33*10*((0.55*pi/(3600*180))^2);
+
+%% 
+% Plot set up
+
+set(groot, 'defaultTextInterpreter',            'latex');
+set(groot, 'defaultAxesTickLabelInterpreter',   'latex'); 
+set(groot, 'defaultLegendInterpreter',          'latex');
+set(groot, 'defaultLegendLocation',             'northeast');
+
+figure()
+plot(out.error.Time, out.error.Data(:,1),'r', ...
+     out.error.Time, out.error.Data(:,2),'b', ...
+     out.error.Time, out.error.Data(:,3),'g')
+title("Navigation solution: error in Euler angles")
+legend("yaw","pitch","roll") 
+xlabel("Time [s]")
+ylabel("Error in Euler angles [deg]")
+grid minor
+
+
