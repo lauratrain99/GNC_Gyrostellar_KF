@@ -58,7 +58,7 @@ t_thrust = 1;
 Tmax = Fmax*Larm;
 
 % Desired angular velocity
-wz_desired = 20*pi/Torb;
+wz_desired = 5*pi/1000;
 
 % System matrices
 % state x = [wx, wy, wz];
@@ -88,7 +88,34 @@ R = 1e-4 * eye(3);
 N = zeros(3); 
 
 % compute the K matrix of the LQR
-[K_LQR,~,~] = lqr(A,B,Q,R,N); 
+K_LQR = lqr(A,B,Q,R,N); 
 
 % check the poles
 damp(A - B*K_LQR)
+
+%%
+% Plot set up
+
+set(groot, 'defaultTextInterpreter',            'latex');
+set(groot, 'defaultAxesTickLabelInterpreter',   'latex'); 
+set(groot, 'defaultLegendInterpreter',          'latex');
+set(groot, 'defaultLegendLocation',             'northeast');
+
+figure()
+plot(out.omega_step.Time, wz_desired*ones(length(out.omega_step.Time)),'b', ...
+     out.omega.Time, out.omega.Data(:,3),'r','LineWidth',1)
+title("Angular velocity in Z axis for Steady Rotation LQR Maneuver")
+xlabel("Time [s]")
+ylabel("Angular velocity [rad/s]")
+ylim([0, 0.018])
+xlim([0, 2])
+grid minor
+
+%%
+figure()
+plot(out.yaw.Time, unwrap(out.yaw.Data),'b', ...
+     out.yaw.Time, 900*ones(length(out.yaw.Data),1),'r--')
+title("Yaw angle for Steady Rotation LQR Maneuver")
+xlabel("Time [s]")
+ylabel("Yaw angle [deg]")
+grid minor

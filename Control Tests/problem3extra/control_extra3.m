@@ -1,5 +1,5 @@
-% This script has to be run to set up the parameters for the problem 2 extra
-% in the Control part. The simulink corresponding files are test_PID_ThreeAxes.slx,
+% This script has to be run to set up the parameters for the problem 3 extra
+% in the Control part. The simulink corresponding files are test_ControlNavigation.slx,
 % The second section plots the results obtained in simulink
 % Authors: Laura Train & Juan María Herrera
 
@@ -9,6 +9,7 @@ clear;clc;close all;
 
 addpath ../../Dynamics
 addpath ../../Control
+addpath ../../Navigation
 addpath ../../
 
 % Initial conditions
@@ -137,6 +138,14 @@ Kp = [KpX,0,0;0,KpY,0;0,0,KpZ];
 Ki = [KiX,0,0;0,KiY,0;0,0,KiZ];
 Kd = [KdX,0,0;0,KdY,0;0,0,KdZ];
 
+% IMU
+noiseAcc = 0.33*40*((((0.07/60)/0.01)*10^(-3))^2);
+noiseAng =  0.33*40*((0.15/60)^2);
+biasAcc = 0.33*((0.00004)^2)/(2*pi);
+biasAng = 0.33*((0.3/3600)^2)/(2*pi);
+
+% StarTracker
+noiseNEA = 0.33*10*((0.55*pi/(3600*180))^2);
 
 %%
 % Plot set up
@@ -146,27 +155,24 @@ set(groot, 'defaultAxesTickLabelInterpreter',   'latex');
 set(groot, 'defaultLegendInterpreter',          'latex');
 set(groot, 'defaultLegendLocation',             'northeast');
 
-
 figure()
-plot(out.omega.Time, out.omega.Data(:,1),'r', ...
-     out.omega.Time, out.omega.Data(:,2),'b', ...
-     out.omega.Time, out.omega.Data(:,3),'g', 'LineWidth',2)
-title("Angular velocities for three-axis PID controller")
-legend("$\omega_x$","$\omega_x$","$\omega_x$") 
-xlabel("Time [s]")
-ylabel("Angular velocity [rad/s]")
-grid minor
 
-
-figure()
-plot(out.euler_angles.Time, out.euler_angles.Data(:,1),'r', ...
-     out.euler_angles.Time, out.euler_angles.Data(:,2),'b', ...
-     out.euler_angles.Time, out.euler_angles.Data(:,3),'g', 'LineWidth',2)
-title("Euler angles for three-axis PID controller")
-legend("yaw","pitch","roll") 
+plot(out.euler_angles_nav.Time, out.euler_angles_nav.Data(:,1),'r', ...
+     out.euler_angles_nav.Time, out.euler_angles_nav.Data(:,2),'b', ...
+     out.euler_angles_nav.Time, out.euler_angles_nav.Data(:,3),'g', 'LineWidth',2)
+title("Euler angles including navigation")
+legend("yaw nav","pitch nav","roll nav") 
 xlabel("Time [s]")
 ylabel("Euler angles [deg]")
 grid minor
 
 
-
+figure()
+plot(out.euler_angles.Time, out.errors.Data(:,1),'r', ...
+     out.euler_angles.Time, out.errors.Data(:,2),'b', ...
+     out.euler_angles.Time, out.errors.Data(:,3),'g')
+title("Error in Euler angles with Navigation")
+legend("yaw","pitch","roll") 
+xlabel("Time [s]")
+ylabel("Euler angles [deg]")
+grid minor

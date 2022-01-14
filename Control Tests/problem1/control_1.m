@@ -29,8 +29,7 @@ r0 = [rmag; 0; 0];
 v0 = [0; sqrt(mu/rmag); 0];
 
 % assume a perturbation a 1% perturbation wrt Z axis angular velocity
-wn = 10*pi/Torb;
-w0 = [wn*0.01; wn*0.01; wn];
+w0 = [0; 0; 0];
 q0 = angle2quat(0,0,0,'ZYX');
 
 % Geometric and massic properties
@@ -76,3 +75,46 @@ t0y = tfz + 10;
 tfy = t0y + ty;
 t0x = tfy + 10;
 tfx = t0x + tx;
+
+%% 
+
+% Plot set up
+
+set(groot, 'defaultTextInterpreter',            'latex');
+set(groot, 'defaultAxesTickLabelInterpreter',   'latex'); 
+set(groot, 'defaultLegendInterpreter',          'latex');
+set(groot, 'defaultLegendLocation',             'northeast');
+
+figure()
+plot(out.Torque.Time, out.Torque.Data(:,1),'r', ...
+     out.Torque.Time, out.Torque.Data(:,2),'b', ...
+     out.Torque.Time, out.Torque.Data(:,3),'g')
+title("Torque values for Open Loop Maneuver")
+legend("$T_x$","$T_y$","$T_z$") 
+xlabel("Time [s]")
+ylabel("Torque [Nm]")
+grid minor
+
+
+figure()
+plot(out.omega.Time, out.omega.Data(:,1),'r', ...
+     out.omega.Time, out.omega.Data(:,2),'b', ...
+     out.omega.Time, out.omega.Data(:,3),'g','LineWidth',2)
+title("Angular Velocities for Open Loop Maneuver")
+legend("$\omega_x$","$\omega_y$","$\omega_z$") 
+xlabel("Time [s]")
+ylabel("Angular velocity [rad/s]")
+grid minor
+
+
+figure()
+plot(out.euler_angles.Time, out.euler_angles.Data(:,1),'g', ...
+     out.euler_angles.Time, out.euler_angles.Data(:,2),'b', ...
+     out.euler_angles.Time, out.euler_angles.Data(:,3),'r','LineWidth',2)
+title("Euler Angles for Open Loop Maneuver")
+legend("yaw","pitch","roll") 
+xlabel("Time [s]")
+ylabel("Euler angles [deg]")
+% ylim([-5,50])
+grid minor
+

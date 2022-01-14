@@ -110,11 +110,40 @@ sys_cl = tf(num_cl,den_cl);
 % root locus
 rlocus(sys_cl)
 
-% 
-% ask Sanjurjo if he wants us to compute these values, does it make sense
-% for systems with poles > 1?
-% td = ;
-% tr = ;
-% tp = ;
-% Mp = ;
-% ts = ;
+%%
+% Plot set up
+
+set(groot, 'defaultTextInterpreter',            'latex');
+set(groot, 'defaultAxesTickLabelInterpreter',   'latex'); 
+set(groot, 'defaultLegendInterpreter',          'latex');
+set(groot, 'defaultLegendLocation',             'northeast');
+
+figure()
+plot(out.Torque.Time, out.Torque.Data(:,1),'r', ...
+     out.Torque.Time, out.Torque.Data(:,2),'b', ...
+     out.Torque.Time, out.Torque.Data(:,3),'g')
+title("Torque values for Open Loop Maneuver")
+legend("$T_x$","$T_y$","$T_z$") 
+xlabel("Time [s]")
+ylabel("Torque [Nm]")
+grid minor
+
+
+figure()
+plot(out.omega.Time, out.omega.Data(:,1),'r', ...
+     out.omega.Time, out.omega.Data(:,2),'b', ...
+     out.omega.Time, out.omega.Data(:,3),'g','LineWidth',2)
+title("Angular Velocities for Close Loop Maneuver")
+legend("$\omega_x$","$\omega_y$","$\omega_z$") 
+xlabel("Time [s]")
+ylabel("Angular velocity [rad/s]")
+grid minor
+
+figure()
+plot(out.yaw_ramp.Time, 45*ones(length(out.yaw_ramp.Time)),'b', ...
+     out.yaw.Time, out.yaw.Data,'r','LineWidth',1)
+title("Yaw Angle for Close Loop Maneuver")
+xlabel("Time [s]")
+ylabel("Yaw angle [deg]")
+ylim([-5,50])
+grid minor

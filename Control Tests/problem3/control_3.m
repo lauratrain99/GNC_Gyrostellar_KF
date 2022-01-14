@@ -58,7 +58,7 @@ t_thrust = 1;
 Tmax = Fmax*Larm;
 
 % Desired angular velocity
-wz_desired = 20*pi/Torb;
+wz_desired = 5*pi/1000;
 
 % System matrices
 % state x = [wx, wy, wz];
@@ -101,11 +101,38 @@ sys_cl = tf(num_cl,den_cl);
 % root locus
 rlocus(sys_cl)
 
-% 
-% ask Sanjurjo if he wants us to compute these values, does it make sense
-% for systems with poles > 1?
-% td = ;
-% tr = ;
-% tp = ;
-% Mp = ;
-% ts = ;
+%%
+% Plot set up
+
+set(groot, 'defaultTextInterpreter',            'latex');
+set(groot, 'defaultAxesTickLabelInterpreter',   'latex'); 
+set(groot, 'defaultLegendInterpreter',          'latex');
+set(groot, 'defaultLegendLocation',             'northeast');
+
+figure()
+plot(out.Torque.Time, out.Torque.Data(:,1),'r', ...
+     out.Torque.Time, out.Torque.Data(:,2),'b', ...
+     out.Torque.Time, out.Torque.Data(:,3),'g')
+title("Torque values for Open Loop Maneuver")
+legend("$T_x$","$T_y$","$T_z$") 
+xlabel("Time [s]")
+ylabel("Torque [Nm]")
+grid minor
+
+figure()
+plot(out.omegaZ_step.Time, wz_desired*ones(length(out.omegaZ_step.Time)),'b', ...
+     out.omegaZ.Time, out.omegaZ.Data,'r','LineWidth',1)
+ylim([0,])
+title("Angular velocity in Z axis for Steady Rotation LQR Maneuver")
+xlabel("Time [s]")
+ylabel("Angular velocity [rad/s]")
+grid minor
+
+
+figure()
+plot(out.yaw.Time, unwrap(out.yaw.Data),'b', ...
+     out.yaw.Time, 900*ones(length(out.yaw.Data),1),'r--')
+title("Yaw angle for Steady Rotation LQR Maneuver")
+xlabel("Time [s]")
+ylabel("Yaw angle [deg]")
+grid minor
