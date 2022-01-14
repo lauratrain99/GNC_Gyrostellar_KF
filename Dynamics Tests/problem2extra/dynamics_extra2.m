@@ -12,11 +12,11 @@ addpath ../../
 
 % Initial conditions
 % orbital parameter
-mu = 3.986e+5;
+mu = 3.986e+14;
 
 % orbit altitude and radius
-h = 3000;
-RE = 6371;
+h = 3000000;
+RE = 6371000;
 rmag = RE + h;
 
 % orbital period
@@ -27,7 +27,7 @@ r0 = [rmag; 0; 0];
 v0 = [0; sqrt(mu/rmag); 0];
 
 % assume a perturbation a 1% perturbation wrt Z axis angular velocity
-wn = 10*pi/Torb;
+wn = 20*pi/Torb;
 w0 = [wn*0.01; wn*0.01; wn];
 q0 = angle2quat(0,0,0,'ZYX');
 
@@ -50,23 +50,59 @@ set(groot, 'defaultAxesTickLabelInterpreter',   'latex');
 set(groot, 'defaultLegendInterpreter',          'latex');
 set(groot, 'defaultLegendLocation',             'northeast');
 
-% figure()
-% plot(out.tout, rad2deg(out.Dynamics.omega_B.Data(1,:)),'r', ...
-%      out.tout, rad2deg(out.Dynamics.omega_B.Data(2,:)),'b', ...
-%      out.tout, rad2deg(out.Dynamics.omega_B.Data(3,:)),'g')
-% title("Free torque motion Iz $>$ Iy $>$ Ix")
-% legend("$\omega_x$","$\omega_y$","$\omega_z$") 
-% xlabel("Time [s]")
-% ylabel("Angular velocity in principal axes [deg/s]")
-% grid minor
-% 
-% figure()
-% plot(out.tout, out.Dynamics.quat.Data(1,:),'r', ...
-%      out.tout, out.Dynamics.quat.Data(2,:),'b', ...
-%      out.tout, out.Dynamics.quat.Data(3,:),'g', ...
-%      out.tout, out.Dynamics.quat.Data(4,:),'k')
-% legend("$q_0$","$q_1$","$q_2$","$q_3$")
-% title("Free torque motion Iz $>$ Iy $>$ Ix")
-% xlabel("Time [s]")
-% ylabel("Quaternions")
-% grid minor
+
+figure()
+plot(out.omega_B.Time, out.omega_B.Data(:,1),'r', ...
+     out.omega_B.Time, out.omega_B.Data(:,2),'b', ...
+     out.omega_B.Time, out.omega_B.Data(:,3),'g','LineWidth',2)
+title("Angular Velocity for Free torque motion Boom")
+legend("$\omega_x$","$\omega_y$","$\omega_z$") 
+xlabel("Time [s]")
+xlim([0,Torb])
+ylabel("Angular velocity [rad/s]")
+grid minor
+
+figure()
+plot(out.quat.Time, out.quat.Data(:,1),'r', ...
+     out.quat.Time, out.quat.Data(:,2),'b', ...
+     out.quat.Time, out.quat.Data(:,3),'g', ...
+     out.quat.Time, out.quat.Data(:,4),'k','LineWidth',2)
+legend("$q_0$","$q_1$","$q_2$","$q_3$")
+title("Quaternions for Free torque motion")
+xlabel("Time [s]")
+xlim([0,Torb])
+ylabel("Quaternions")
+grid minor
+
+figure()
+plot(out.r_ECI.Time, out.r_ECI.Data(:,1),'r', ...
+     out.r_ECI.Time, out.r_ECI.Data(:,2),'b', ...
+     out.r_ECI.Time, out.r_ECI.Data(:,3),'g','LineWidth',2)
+legend("x","y","z")
+title("Inertial position for Free torque motion Boom")
+xlabel("Time [s]")
+xlim([0,Torb])
+ylabel("Position [m]")
+grid minor
+
+figure()
+plot(out.v_ECI.Time, out.v_ECI.Data(:,1),'r', ...
+     out.v_ECI.Time, out.v_ECI.Data(:,2),'b', ...
+     out.v_ECI.Time, out.v_ECI.Data(:,3),'g','LineWidth',2)
+legend("$v_x$","$v_y$","$v_z$")
+title("Inertial velocity for Free torque motion Boom")
+xlabel("Time [s]")
+xlim([0,Torb])
+ylabel("Velocity [m/s]")
+grid minor
+
+figure()
+plot(out.euler_angles.Time, rad2deg(unwrap(out.euler_angles.Data(:,1))),'r',...
+     out.euler_angles.Time, rad2deg(unwrap(out.euler_angles.Data(:,2))),'b', ...
+     out.euler_angles.Time, rad2deg(unwrap(out.euler_angles.Data(:,3))),'g','LineWidth',2)
+legend("yaw","pitch","roll")
+title("Euler angles for Free torque motion Boom")
+xlabel("Time [s]")
+xlim([0,Torb])
+ylabel("Euler angles [deg]")
+grid minor

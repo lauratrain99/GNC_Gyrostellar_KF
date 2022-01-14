@@ -12,11 +12,11 @@ addpath ../../
 
 % Initial conditions
 % orbital parameter
-mu = 3.986e+5;
+mu = 3.986e+14;
 
 % orbit altitude and radius
-h = 3000;
-RE = 6371;
+h = 3000000;
+RE = 6371000;
 rmag = RE + h;
 
 % orbital period
@@ -27,7 +27,7 @@ r0 = [rmag; 0; 0];
 v0 = [0; sqrt(mu/rmag); 0];
 
 % value to counteract by the reaction wheels
-wz0 = deg2rad(2);
+wz0 = deg2rad(0.5);
 w0 = [0; 0; wz0];
 q0 = angle2quat(0,0,0,'ZYX');
 
@@ -50,34 +50,59 @@ Irw = [5.02e-5, 0, 0; 0, 9.41e-5, 0; 0, 0, 5.02e-5];
 
 % value of the angular velocity impulse
 wzrw = (Isc(3,3) + Irw(3,3))/Irw(3,3)* wz0;
-twait = 10*pi/wz0;
-t0 = 1000;
+twait = Torb/2;
+t0 = 2*pi/wz0 * 3;
 tramp = 10;
 
-%% PLOT SETTING
-% Default properties of plots
+%%
+% Plot set up
+
 set(groot, 'defaultTextInterpreter',            'latex');
 set(groot, 'defaultAxesTickLabelInterpreter',   'latex'); 
 set(groot, 'defaultLegendInterpreter',          'latex');
 set(groot, 'defaultLegendLocation',             'northeast');
 
-% figure()
-% plot(out.tout, rad2deg(out.Dynamics.omega_B.Data(1,:)),'r', ...
-%      out.tout, rad2deg(out.Dynamics.omega_B.Data(2,:)),'b', ...
-%      out.tout, rad2deg(out.Dynamics.omega_B.Data(3,:)),'g')
-% title("Free torque motion Iz $>$ Iy $>$ Ix")
-% legend("$\omega_x$","$\omega_y$","$\omega_z$") 
-% xlabel("Time [s]")
-% ylabel("Angular velocity in principal axes [deg/s]")
-% grid minor
-% 
-% figure()
-% plot(out.tout, out.Dynamics.quat.Data(1,:),'r', ...
-%      out.tout, out.Dynamics.quat.Data(2,:),'b', ...
-%      out.tout, out.Dynamics.quat.Data(3,:),'g', ...
-%      out.tout, out.Dynamics.quat.Data(4,:),'k')
-% legend("$q_0$","$q_1$","$q_2$","$q_3$")
-% title("Free torque motion Iz $>$ Iy $>$ Ix")
-% xlabel("Time [s]")
-% ylabel("Quaternions")
-% grid minor
+figure()
+plot(out.Torque.Time, out.Torque.Data(:,1),'r', ...
+     out.Torque.Time, out.Torque.Data(:,2),'b', ...
+     out.Torque.Time, out.Torque.Data(:,3),'g','LineWidth',2)
+title("Torque for reaction wheels dynamics")
+legend("$T_x$","$T_Y$","$T_Z$") 
+xlabel("Time [s]")
+xlim([0,Torb])
+ylabel("Torque [Nm]")
+grid minor
+
+figure()
+plot(out.omega_B.Time, out.omega_B.Data(:,1),'r', ...
+     out.omega_B.Time, out.omega_B.Data(:,2),'b', ...
+     out.omega_B.Time, out.omega_B.Data(:,3),'g','LineWidth',2)
+title("Angular velocity of the spacecraft")
+legend("$\omega_x$","$\omega_y$","$\omega_z$") 
+xlabel("Time [s]")
+xlim([0,Torb])
+ylabel("Angular velocity [rad/s]")
+grid minor
+
+
+figure()
+plot(out.omega_rw.Time, out.omega_rw.Data(:,1),'r', ...
+     out.omega_rw.Time, out.omega_rw.Data(:,2),'b', ...
+     out.omega_rw.Time, out.omega_rw.Data(:,3),'g','LineWidth',2)
+title("Angular velocity of the reaction wheels")
+legend("$\omega_x$","$\omega_y$","$\omega_z$") 
+xlabel("Time [s]")
+xlim([0,Torb])
+ylabel("Angular velocity [rad/s]")
+grid minor
+
+figure()
+plot(out.euler_angles.Time, rad2deg(unwrap(out.euler_angles.Data(:,1))),'r',...
+     out.euler_angles.Time, rad2deg(unwrap(out.euler_angles.Data(:,2))),'b', ...
+     out.euler_angles.Time, rad2deg(unwrap(out.euler_angles.Data(:,3))),'g','LineWidth',2)
+legend("yaw","pitch","roll")
+title("Euler angles for reaction wheels dynamics")
+xlabel("Time [s]")
+xlim([0,Torb])
+ylabel("Euler angles [deg]")
+grid minor

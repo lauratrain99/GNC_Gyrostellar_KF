@@ -1,8 +1,8 @@
 figure()
 hold on
-plot3(out.Dynamics.r_ECI.Data(1,1), out.Dynamics.r_ECI.Data(2,1), out.Dynamics.r_ECI.Data(3,1), 'r*', 'MarkerSize',12)
-earth_sphere('km')
+plot3(out.r_ECI.Data(1,1), out.r_ECI.Data(1,2), out.r_ECI.Data(1,3), 'r*', 'MarkerSize',12)
+earth_sphere('m')
 hold on
-plot3(out.Dynamics.r_ECI.Data(1,:), out.Dynamics.r_ECI.Data(2,:), out.Dynamics.r_ECI.Data(3,:),'r','LineWidth',3)
+plot3(out.r_ECI.Data(:,1), out.r_ECI.Data(:,2), out.r_ECI.Data(:,3),'r','LineWidth',3)
 grid minor
 

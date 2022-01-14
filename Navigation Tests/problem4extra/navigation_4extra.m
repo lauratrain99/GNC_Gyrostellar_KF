@@ -58,8 +58,8 @@ gyro_bias_init = [sqrt(deg2rad(biasAng));sqrt(deg2rad(biasAng));sqrt(deg2rad(bia
 init_align_error = deg2rad([0;0;0]);
 str_std =[sqrt(noiseNEA);sqrt(noiseNEA);sqrt(noiseNEA) ];
 
-% gyro_std = [100;100;100];
-% gyro_bias_init = [1;1;1];
-% init_align_error = deg2rad([1;1;2]);
-% str_std =[1;1;1];
+% gyro_std = [0;0;0];
+% gyro_bias_init = [0;0;0];
+% init_align_error = deg2rad([0;0;0]);
+% str_std =[0;0;0];
 
