@@ -141,4 +141,8 @@ Sensors/slprj/sim/varcache/MagTest/varInfo.mat
 *.mat
 *.jpg
 *.PNG
+<<<<<<< Updated upstream
 others/~$geometry.pptm
+=======
+*.l
+>>>>>>> Stashed changes
