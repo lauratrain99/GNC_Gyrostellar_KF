@@ -103,6 +103,18 @@ B(6,3) = 1/Iz;
 P = ctrb(A,B);
 rank(P)
 
+
+% pole placement
+s1 = - 30;
+s2 = - 20;
+s3 = - 10;
+s4 = - 40;
+s6 = - 50;
+s5 = - 60;
+
+KK_PP= place(A, B, [s1, s2, s3, s4, s5, s6]);
+damp(A - B*KK_PP)
+
 % yaw transfer function
 numZ = [0, 0, 1];
 denZ = [Iz, 0, 0]; 
@@ -138,14 +150,14 @@ Kp = [KpX,0,0;0,KpY,0;0,0,KpZ];
 Ki = [KiX,0,0;0,KiY,0;0,0,KiZ];
 Kd = [KdX,0,0;0,KdY,0;0,0,KdZ];
 
-% IMU
-noiseAcc = 0.33*40*((((0.07/60)/0.01)*10^(-3))^2);
-noiseAng =  0.33*40*((0.15/60)^2);
-biasAcc = 0.33*((0.00004)^2)/(2*pi);
-biasAng = 0.33*((0.3/3600)^2)/(2*pi);
+%IMU
+noiseAcc = 0.33*((((0.07/60)/0.01)*10^(-3))^2); %g^2/Hz
+noiseAng =  0.33*((0.15/60)^2); %(deg/s)^2/Hz
+biasAcc = 0.33*((0.00004)^2)/(2*pi); %g^2
+biasAng = 0.33*((0.3/3600)^2)/(2*pi);%(deg/s)^2
 
-% StarTracker
-noiseNEA = 0.33*10*((0.55*pi/(3600*180))^2);
+%StarTracker
+noiseNEA = 0.33*((0.55*pi/(3600*180))^2); %rad^2/Hz
 
 %%
 % Plot set up
@@ -159,7 +171,7 @@ figure()
 
 plot(out.euler_angles_nav.Time, out.euler_angles_nav.Data(:,1),'r', ...
      out.euler_angles_nav.Time, out.euler_angles_nav.Data(:,2),'b', ...
-     out.euler_angles_nav.Time, out.euler_angles_nav.Data(:,3),'g', 'LineWidth',2)
+     out.euler_angles_nav.Time, out.euler_angles_nav.Data(:,3),'g')
 title("Euler angles including navigation")
 legend("yaw nav","pitch nav","roll nav") 
 xlabel("Time [s]")
@@ -168,9 +180,45 @@ grid minor
 
 
 figure()
-plot(out.euler_angles.Time, out.errors.Data(:,1),'r', ...
-     out.euler_angles.Time, out.errors.Data(:,2),'b', ...
-     out.euler_angles.Time, out.errors.Data(:,3),'g')
+
+plot(out.omega_nav.Time, out.omega_nav.Data(:,1),'r', ...
+     out.omega_nav.Time, out.omega_nav.Data(:,2),'b', ...
+     out.omega_nav.Time, out.omega_nav.Data(:,3),'g')
+title("Angular velocity including navigation")
+legend("$\omega_x$ nav","$\omega_y$ nav","$\omega_z$ nav") 
+xlabel("Time [s]")
+ylabel("Angular velocity [deg/s]")
+grid minor
+
+%%
+figure()
+
+plot(out.omega_step.Time, out.omega_step.Data(:,1),'r', ...
+     out.omega_step.Time, out.omega_step.Data(:,2),'b', ...
+     out.omega_step.Time, out.omega_step.Data(:,3),'g','LineWidth',2)
+title("Angular velocity including navigation r(s) signal")
+ylim([-0.001,0.032])
+legend("$\omega_x$","$\omega_y$","$\omega_z$") 
+xlabel("Time [s]")
+ylabel("Angular velocity [deg/s]")
+grid minor
+%%
+
+figure()
+
+plot(out.euler_angles_ramp.Time, out.euler_angles_ramp.Data(:,1),'r', ...
+     out.euler_angles_ramp.Time, out.euler_angles_ramp.Data(:,2),'b', ...
+     out.euler_angles_ramp.Time, out.euler_angles_ramp.Data(:,3),'g','LineWidth',2)
+title("Euler angles including navigation r(s) signal")
+legend("yaw","pitch","roll") 
+xlabel("Time [s]")
+ylabel("Euler angles [deg]")
+grid minor
+
+figure()
+plot(out.errors.Time, out.errors.Data(:,1),'r', ...
+     out.errors.Time, out.errors.Data(:,2),'b', ...
+     out.errors.Time, out.errors.Data(:,3),'g')
 title("Error in Euler angles with Navigation")
 legend("yaw","pitch","roll") 
 xlabel("Time [s]")
