@@ -30,7 +30,7 @@ v0 = [0; sqrt(mu/rmag); 0];
 wn = 0;
 w0 = [0; 0; wn];
 euler0 =[pi/2, 0, pi/4];
-q0 = angle2quat(45,0,90,'ZYX');
+q0 = angle2quat(euler0(3),euler0(2),euler0(1),'ZYX');
 
 %CASE 2
 %wn = deg2rad(2);
