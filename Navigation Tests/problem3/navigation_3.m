@@ -26,7 +26,8 @@ r0 = [rmag; 0; 0];
 v0 = [0; sqrt(mu/rmag); 0];
 
 % assume a perturbation a 1% perturbation wrt Z axis angular velocity
-wn = 20*pi/Torb;
+% wn = 5*pi/Torb;
+wn = 0;
 w0 = [wn*0.01; wn*0.01; wn];
 q0 = angle2quat(0,0,0,'ZYX');
 
@@ -44,18 +45,15 @@ Ix = Isc(1,1);
 Iy = Isc(2,2);
 Iz = Isc(3,3);
 
-% Magnetometer
-hyst = (60e-6)*0.001;
-noiseDens = ((50e-12)^2)*40;
 
-% IMU
-noiseAcc = 0.33*40*((((0.07/60)/0.01)*10^(-3))^2);
-noiseAng =  0.33*40*((0.15/60)^2);
-biasAcc = 0.33*((0.00004)^2)/(2*pi);
-biasAng = 0.33*((0.3/3600)^2)/(2*pi);
+%IMU
+noiseAcc = 0.33*((((0.07/60)/0.01)*10^(-3))^2); %g^2/Hz
+noiseAng =  0.33*((0.15/60)^2); %(deg/s)^2/Hz
+biasAcc = 0.33*((0.00004)^2)/(2*pi); %g^2
+biasAng = 0.33*((0.3/3600)^2)/(2*pi);%(deg/s)^2
 
-% StarTracker
-noiseNEA = 0.33*10*((0.55*pi/(3600*180))^2);
+%StarTracker
+noiseNEA = 0.33*((0.55*pi/(3600*180))^2); %rad^2/Hz
 
 %% 
 % Plot set up
