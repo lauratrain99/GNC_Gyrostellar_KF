@@ -190,7 +190,7 @@ xlabel("Time [s]")
 ylabel("Angular velocity [deg/s]")
 grid minor
 
-%%
+
 figure()
 
 plot(out.omega_step.Time, out.omega_step.Data(:,1),'r', ...
@@ -202,7 +202,7 @@ legend("$\omega_x$","$\omega_y$","$\omega_z$")
 xlabel("Time [s]")
 ylabel("Angular velocity [deg/s]")
 grid minor
-%%
+
 
 figure()
 

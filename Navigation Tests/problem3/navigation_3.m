@@ -26,8 +26,8 @@ r0 = [rmag; 0; 0];
 v0 = [0; sqrt(mu/rmag); 0];
 
 % assume a perturbation a 1% perturbation wrt Z axis angular velocity
-% wn = 5*pi/Torb;
-wn = 0;
+wn = 5*pi/Torb;
+% wn = 0;
 w0 = [wn*0.01; wn*0.01; wn];
 q0 = angle2quat(0,0,0,'ZYX');
 
@@ -64,13 +64,23 @@ set(groot, 'defaultLegendInterpreter',          'latex');
 set(groot, 'defaultLegendLocation',             'northeast');
 
 figure()
-plot(out.error.Time, out.error.Data(:,1),'r', ...
-     out.error.Time, out.error.Data(:,2),'b', ...
-     out.error.Time, out.error.Data(:,3),'g')
+plot(out.error_euler.Time, out.error_euler.Data(:,1),'r', ...
+     out.error_euler.Time, out.error_euler.Data(:,2),'b', ...
+     out.error_euler.Time, out.error_euler.Data(:,3),'g')
 title("Navigation solution: error in Euler angles")
 legend("yaw","pitch","roll") 
 xlabel("Time [s]")
 ylabel("Error in Euler angles [deg]")
+grid minor
+
+figure()
+plot(out.error_omega.Time, out.error_omega.Data(:,1),'r', ...
+     out.error_omega.Time, out.error_omega.Data(:,2),'b', ...
+     out.error_omega.Time, out.error_omega.Data(:,3),'g')
+title("Navigation solution: error in angular velocity")
+legend("$\omega_x$","$\omega_y$","$\omega_z$") 
+xlabel("Time [s]")
+ylabel("Error in angular velocity [rad/s]")
 grid minor
 
 
