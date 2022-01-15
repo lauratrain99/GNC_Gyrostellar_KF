@@ -45,13 +45,13 @@ Iy = Isc(2,2);
 Iz = Isc(3,3);
 
 %IMU
-noiseAcc = 0.33*((((0.07/60)/0.01)*10^(-3))^2); %g^2/Hz
-noiseAng =  0.33*((0.15/60)^2); %(deg/s)^2/Hz
-biasAcc = 0.33*((0.00004)^2)/(2*pi); %g^2
-biasAng = 0.33*((0.3/3600)^2)/(2*pi);%(deg/s)^2
+noiseAcc =(0.07/(60*9.81))^2; %g^2/Hz
+noiseAng =(0.15/60)^2; %(deg/s)^2/Hz
+biasAcc = ((0.00004)^2)/(2*pi); %g^2
+biasAng = ((0.3/3600)^2)/(2*pi);%(deg/s)^2
 
 %StarTracker
-noiseNEA = 0.33*10*((0.55*pi/(3600*180))^2); %W
+noiseNEA =(0.55*pi/(3600*180))^2; %rad^2/Hz
 
 gyro_std = [sqrt(deg2rad(noiseAng*40));sqrt(deg2rad(noiseAng*40));sqrt(deg2rad(noiseAng*40)) ];
 gyro_bias_init = [sqrt(deg2rad(biasAng));sqrt(deg2rad(biasAng));sqrt(deg2rad(biasAng)) ];
