@@ -26,9 +26,11 @@ r0 = [rmag; 0; 0];
 v0 = [0; sqrt(mu/rmag); 0];
 
 % assume a perturbation a 1% perturbation wrt Z axis angular velocity
-wn = 10*pi/Torb;
+wn = 0;
 w0 = [wn*0.01; wn*0.01; wn];
-q0 = angle2quat(0,0,0,'ZYX');
+% euler0 = [pi/4,pi/6,pi/8];
+euler0 = [0,0,0];
+q0 = angle2quat(euler0(3),euler0(2),euler0(1),'ZYX');
 
 % Geometric and massic properties
 % Iz>Iy, Iz>Ix stable configuration. h>w>d
@@ -53,8 +55,8 @@ biasAng = ((0.3/3600)^2)/(2*pi);%(deg/s)^2
 %StarTracker
 noiseNEA =(0.55*pi/(3600*180))^2; %rad^2/Hz
 
-gyro_std = [sqrt(deg2rad(noiseAng*40));sqrt(deg2rad(noiseAng*40));sqrt(deg2rad(noiseAng*40)) ];
-gyro_bias_init = [sqrt(deg2rad(biasAng));sqrt(deg2rad(biasAng));sqrt(deg2rad(biasAng)) ];
+gyro_std = [sqrt(noiseAng*40);sqrt(noiseAng*40);sqrt(noiseAng*40) ];
+gyro_bias_init = [sqrt(biasAng);sqrt(biasAng);sqrt(biasAng) ]*100;
 init_align_error = deg2rad([0;0;0]);
 str_std =[sqrt(noiseNEA*10);sqrt(noiseNEA*10);sqrt(noiseNEA*10) ];
 
