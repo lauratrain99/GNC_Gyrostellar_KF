@@ -27,16 +27,16 @@ v0 = [0; sqrt(mu/rmag); 0];
 
 % assume a perturbation a 1% perturbation wrt Z axis angular velocity
 %CASE 1
-% wn = 0;
-% w0 = [0; 0; wn];
-% euler0 =[pi/2, 0, pi/4];
-% q0 = angle2quat(euler0(3),euler0(2),euler0(1),'ZYX');
+wn = 0;
+w0 = [0; 0; wn];
+euler0 =[pi/2, 0, pi/4];
+q0 = angle2quat(euler0(3),euler0(2),euler0(1),'ZYX');
 
 %CASE 2
-wn = deg2rad(2);
-w0 = [0; 0; wn];
-euler0 =[0, 0, 0];
-q0 = angle2quat(0,0,0,'ZYX');
+% wn = deg2rad(2);
+% w0 = [0; 0; wn];
+% euler0 =[0, 0, 0];
+% q0 = angle2quat(0,0,0,'ZYX');
 
 % Geometric and massic properties
 % Iz>Iy, Iz>Ix stable configuration. h>w>d

@@ -10,7 +10,7 @@ addpath ../../Navigation
 
 % Magnetometer
 hyst = (60e-6)*0.001; %T
-noiseDens = ((50e-12)^2); %T^2/Hz
+noiseMag = ((50e-12)^2); %T^2/Hz
 
 %IMU
 noiseAcc =(0.07/(60*9.81))^2; %g^2/Hz
