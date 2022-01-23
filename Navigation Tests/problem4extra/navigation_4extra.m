@@ -11,11 +11,11 @@ addpath ../../Navigation
 
 % Initial conditions
 % orbital parameter
-mu = 3.986e+5;
+mu = 3.986e+14;
 
 % orbit altitude and radius
-h = 3000;
-RE = 6371;
+h = 3000000;
+RE = 6371000;
 rmag = RE + h;
 
 % orbital period
@@ -55,13 +55,10 @@ biasAng = ((0.3/3600)^2)/(2*pi);%(deg/s)^2
 %StarTracker
 noiseNEA =(0.55*pi/(3600*180))^2; %rad^2/Hz
 
+%Kalman initialization
 gyro_std = [sqrt(noiseAng*40);sqrt(noiseAng*40);sqrt(noiseAng*40) ];
 gyro_bias_init = [sqrt(biasAng);sqrt(biasAng);sqrt(biasAng) ]*100;
 init_align_error = deg2rad([0;0;0]);
 str_std =[sqrt(noiseNEA*10);sqrt(noiseNEA*10);sqrt(noiseNEA*10) ];
 
-% gyro_std = [0;0;0];
-% gyro_bias_init = [0;0;0];
-% init_align_error = deg2rad([0;0;0]);
-% str_std =[0;0;0];
 

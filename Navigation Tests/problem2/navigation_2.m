@@ -12,11 +12,11 @@ addpath ../../Dynamics
 
 % Initial conditions
 % orbital parameter
-mu = 3.986e+5;
+mu = 3.986e+14;
 
 % orbit altitude and radius
-h = 3000;
-RE = 6371;
+h = 3000000;
+RE = 6371000;
 rmag = RE + h;
 
 % orbital period
